@@ -1,0 +1,98 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+
+const formattedPubDate = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const formattedUpdatedDate = updatedDate?.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+  <article class="blog-post">
+    <header class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <time datetime={pubDate.toISOString()}>Published {formattedPubDate}</time>
+        {formattedUpdatedDate && (
+          <time datetime={updatedDate!.toISOString()}> · Updated {formattedUpdatedDate}</time>
+        )}
+      </div>
+      {tags.length > 0 && (
+        <ul class="post-tags">
+          {tags.map((tag) => (
+            <li class="tag">{tag}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    {heroImage && (
+      <img src={heroImage} alt={`Cover image for ${title}`} class="hero-image" />
+    )}
+
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-post {
+    max-width: var(--max-width);
+  }
+
+  .post-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .post-tags {
+    display: flex;
+    gap: var(--space-sm);
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-sm);
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+
+  .hero-image {
+    width: 100%;
+    margin-bottom: var(--space-lg);
+  }
+
+  .post-content :global(h2) {
+    margin-top: var(--space-lg);
+  }
+
+  .post-content :global(h3) {
+    margin-top: var(--space-lg);
+  }
+</style>

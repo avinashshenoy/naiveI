@@ -1,0 +1,40 @@
+---
+import Nav from "./Nav.astro";
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-title">naiveI</a>
+    <Nav />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .site-title:hover {
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+</style>
