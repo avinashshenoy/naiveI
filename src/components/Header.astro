@@ -1,40 +1,46 @@
 ---
-import Nav from "./Nav.astro";
+interface Props {
+  showSearch?: boolean;
+}
+
+const { showSearch = true } = Astro.props;
 ---
 
-<header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="site-title">naiveI</a>
-    <Nav />
+<nav class="navbar-custom">
+  <a class="navbar-brand" href="/">Naive Investor</a>
+
+  <button class="navbar-toggle" aria-label="Toggle navigation" id="nav-toggle">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+
+  <div class="nav-collapse" id="nav-collapse">
+    <ul class="nav-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      {showSearch && (
+        <li>
+          <button class="search-icon" id="search-open" aria-label="Search">
+            <i class="fa fa-search"></i>
+          </button>
+        </li>
+      )}
+    </ul>
   </div>
-</header>
+</nav>
 
-<style>
-  .site-header {
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-bg);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const collapse = document.getElementById("nav-collapse");
+  if (toggle && collapse) {
+    toggle.addEventListener("click", () => {
+      collapse.classList.toggle("open");
+    });
+    document.addEventListener("click", (e) => {
+      if (!toggle.contains(e.target as Node) && !collapse.contains(e.target as Node)) {
+        collapse.classList.remove("open");
+      }
+    });
   }
-
-  .header-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--space-md);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .site-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-text);
-  }
-
-  .site-title:hover {
-    text-decoration: none;
-    color: var(--color-accent);
-  }
-</style>
+</script>

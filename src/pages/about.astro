@@ -1,48 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroBanner from "../components/HeroBanner.astro";
 ---
 
 <BaseLayout
   title="About"
-  description="Learn more about who I am, what I do, and how to get in touch."
+  description="Learn more about Avinash Shenoy, creator of Naive Investor."
 >
-  <section class="about">
-    <h1>About Me</h1>
-    <p>
-      Hi! I'm the person behind <strong>naiveI</strong>. I'm a developer who
-      enjoys building things for the web.
-    </p>
+  <HeroBanner
+    slot="hero"
+    title="About Me"
+    type="page"
+  />
 
-    <h2>What I Do</h2>
-    <p>
-      I work with modern web technologies to build fast, accessible, and
-      delightful user experiences. My interests span front-end development,
-      static site generators, and developer tooling.
-    </p>
+  <div class="container">
+    <div class="row">
+      <div class="col-content post-container">
+        <p>
+          Welcome! My name is <strong>Avinash</strong>, creator of Naive Investor.
+          I consider myself an amateur and still naive trader who has been actively
+          dipping his toes in the public markets.
+        </p>
 
-    <h2>Skills</h2>
-    <ul>
-      <li>JavaScript / TypeScript</li>
-      <li>HTML &amp; CSS</li>
-      <li>Astro, React, and other frameworks</li>
-      <li>Git &amp; CI/CD</li>
-    </ul>
+        <h2>What I Do</h2>
+        <p>
+          I work with modern web technologies to build fast, accessible, and
+          delightful user experiences. My interests span front-end development,
+          static site generators, financial markets, and developer tooling.
+        </p>
 
-    <h2>Get in Touch</h2>
-    <p>
-      You can find me on <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
-      and <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>,
-      or reach out via email at <a href="mailto:hello@example.com">hello@example.com</a>.
-    </p>
-  </section>
+        <h2>Skills</h2>
+        <ul>
+          <li>JavaScript / TypeScript</li>
+          <li>HTML &amp; CSS</li>
+          <li>Astro, React, and other frameworks</li>
+          <li>Git &amp; CI/CD</li>
+        </ul>
+
+        <h2>Get in Touch</h2>
+        <p>
+          You can find me on <a href="https://github.com/ashenoy2014" target="_blank" rel="noopener noreferrer">GitHub</a>
+          and <a href="https://twitter.com/nic_nash" target="_blank" rel="noopener noreferrer">Twitter</a>.
+        </p>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
-
-<style>
-  .about h1 {
-    margin-bottom: var(--space-lg);
-  }
-
-  .about h2 {
-    margin-top: var(--space-lg);
-  }
-</style>

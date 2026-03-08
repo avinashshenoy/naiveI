@@ -3,72 +3,29 @@ interface Props {
   title: string;
   description: string;
   pubDate: Date;
-  tags?: string[];
+  author?: string;
   slug: string;
 }
 
-const { title, description, pubDate, tags = [], slug } = Astro.props;
+const { title, description, pubDate, author = "Avinash Shenoy", slug } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString("en-US", {
+  weekday: "short",
   year: "numeric",
-  month: "long",
+  month: "short",
   day: "numeric",
 });
 ---
 
-<article class="post-card">
+<div class="post-preview">
   <a href={`/blog/${slug}`}>
-    <h3 class="post-title">{title}</h3>
+    <h2 class="post-title">{title}</h2>
+    <div class="post-content-preview">
+      {description}
+    </div>
   </a>
-  <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-  <p class="post-description">{description}</p>
-  {tags.length > 0 && (
-    <ul class="post-tags">
-      {tags.map((tag) => (
-        <li class="tag">{tag}</li>
-      ))}
-    </ul>
-  )}
-</article>
-
-<style>
-  .post-card {
-    padding: var(--space-md) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .post-card:last-child {
-    border-bottom: none;
-  }
-
-  .post-title {
-    margin-bottom: var(--space-xs);
-  }
-
-  time {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-  }
-
-  .post-description {
-    margin-top: var(--space-sm);
-    color: var(--color-text-muted);
-  }
-
-  .post-tags {
-    display: flex;
-    gap: var(--space-sm);
-    list-style: none;
-    padding: 0;
-    margin-top: var(--space-sm);
-  }
-
-  .tag {
-    font-size: 0.75rem;
-    background: var(--color-surface);
-    color: var(--color-text-muted);
-    padding: 2px 8px;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-  }
-</style>
+  <p class="post-meta">
+    Posted by {author} on {formattedDate}
+  </p>
+</div>
+<hr />

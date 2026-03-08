@@ -1,0 +1,29 @@
+---
+interface Link {
+  href: string;
+  icon: string;
+  label: string;
+}
+
+interface Props {
+  links?: Link[];
+}
+
+const { links = [
+  { href: "https://github.com/ashenoy2014", icon: "fab fa-github", label: "GitHub" },
+  { href: "https://twitter.com/nic_nash", icon: "fab fa-twitter", label: "Twitter" },
+] } = Astro.props;
+---
+
+<ul class="social-icons">
+  {links.map(({ href, icon, label }) => (
+    <li>
+      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class:list={[icon, "fa-stack-1x", "fa-inverse"]}></i>
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>

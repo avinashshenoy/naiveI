@@ -8,14 +8,17 @@ interface Props {
 
 const { title, description, image, url } = Astro.props;
 const canonicalURL = url || new URL(Astro.url.pathname, Astro.site).href;
-const siteName = "naiveI";
+const siteName = "Naive Investor";
 ---
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="generator" content={Astro.generator} />
+<meta name="author" content="Avinash Shenoy" />
+<meta name="keywords" content="blog,developer,personal" />
 
-<title>{title} | {siteName}</title>
+<title>{title === "Home" ? siteName : `${title} | ${siteName}`}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
 
@@ -32,6 +35,9 @@ const siteName = "naiveI";
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 {image && <meta name="twitter:image" content={new URL(image, Astro.site).href} />}
+
+<!-- Font Awesome -->
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet" />
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />

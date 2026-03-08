@@ -1,60 +1,50 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroBanner from "../components/HeroBanner.astro";
 import BlogPostCard from "../components/BlogPostCard.astro";
+import Sidebar from "../components/Sidebar.astro";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 5);
+const allPosts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const posts = allPosts.slice(0, 3);
+
+const allTags = [...new Set(allPosts.flatMap((p) => p.data.tags))];
 ---
 
 <BaseLayout
   title="Home"
-  description="Welcome to naiveI — a personal blog and website."
+  description="Thoughts, Ideas and Expressions on Financial Markets... From the mind of a Naive Self-Taught Investor"
 >
-  <section class="hero">
-    <h1>Hey, I'm naiveI 👋</h1>
-    <p>
-      Welcome to my corner of the internet. I write about web development,
-      technology, and things I find interesting.
-    </p>
-    <p>
-      <a href="/about">Learn more about me →</a>
-    </p>
-  </section>
+  <HeroBanner
+    slot="hero"
+    title="Naive Investor"
+    subheading="Thoughts, Ideas and Expressions on Financial Markets... From the mind of a Naive Self-Taught Investor"
+  />
 
-  <section class="recent-posts">
-    <h2>Recent Posts</h2>
-    {posts.map((post) => (
-      <BlogPostCard
-        title={post.data.title}
-        description={post.data.description}
-        pubDate={post.data.pubDate}
-        tags={post.data.tags}
-        slug={post.slug}
-      />
-    ))}
-    <p class="all-posts-link">
-      <a href="/blog">View all posts →</a>
-    </p>
-  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-content postlist-container">
+        {posts.map((post) => (
+          <BlogPostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.slug}
+          />
+        ))}
+
+        <ul class="pager">
+          <li class="next">
+            <a href="/blog">All Posts &rarr;</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sidebar">
+        <Sidebar tags={allTags} />
+      </div>
+    </div>
+  </div>
 </BaseLayout>
-
-<style>
-  .hero {
-    margin-bottom: var(--space-xl);
-  }
-
-  .hero h1 {
-    font-size: 2.25rem;
-    margin-bottom: var(--space-md);
-  }
-
-  .recent-posts h2 {
-    margin-bottom: var(--space-md);
-  }
-
-  .all-posts-link {
-    margin-top: var(--space-lg);
-  }
-</style>

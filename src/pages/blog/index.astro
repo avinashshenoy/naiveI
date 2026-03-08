@@ -1,39 +1,43 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroBanner from "../../components/HeroBanner.astro";
 import BlogPostCard from "../../components/BlogPostCard.astro";
+import Sidebar from "../../components/Sidebar.astro";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))];
 ---
 
 <BaseLayout
   title="Blog"
-  description="All blog posts — thoughts on web development, technology, and more."
+  description="All blog posts — thoughts on financial markets, technology, and more."
 >
-  <h1>Blog</h1>
-  <p class="blog-intro">All posts, newest first.</p>
+  <HeroBanner
+    slot="hero"
+    title="Blog"
+    subheading="All posts"
+    type="page"
+  />
 
-  <section class="post-list">
-    {posts.map((post) => (
-      <BlogPostCard
-        title={post.data.title}
-        description={post.data.description}
-        pubDate={post.data.pubDate}
-        tags={post.data.tags}
-        slug={post.slug}
-      />
-    ))}
-  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-content postlist-container">
+        {posts.map((post) => (
+          <BlogPostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            slug={post.slug}
+          />
+        ))}
+      </div>
+
+      <div class="col-sidebar">
+        <Sidebar tags={allTags} />
+      </div>
+    </div>
+  </div>
 </BaseLayout>
-
-<style>
-  h1 {
-    margin-bottom: var(--space-sm);
-  }
-
-  .blog-intro {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-lg);
-  }
-</style>

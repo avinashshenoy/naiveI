@@ -1,0 +1,79 @@
+---
+---
+
+<div class="search-page" id="search-page">
+  <div class="search-icon-close-container" id="search-close">
+    <span class="search-icon-close">
+      <i class="fa fa-chevron-down"></i>
+    </span>
+  </div>
+  <div class="search-main">
+    <input type="text" id="search-input" placeholder="$ grep..." aria-label="Search posts" />
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<script>
+  const searchPage = document.getElementById("search-page");
+  const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  const searchClose = document.getElementById("search-close");
+  const searchOpen = document.getElementById("search-open");
+  const searchResults = document.getElementById("search-results");
+
+  let posts: Array<{ title: string; description: string; slug: string }> = [];
+
+  // Load post data from a JSON endpoint (built at build time)
+  async function loadPosts() {
+    if (posts.length > 0) return;
+    try {
+      const res = await fetch("/search.json");
+      posts = await res.json();
+    } catch {
+      posts = [];
+    }
+  }
+
+  function openSearch() {
+    searchPage?.classList.add("search-active");
+    loadPosts();
+    setTimeout(() => searchInput?.focus(), 300);
+  }
+
+  function closeSearch() {
+    searchPage?.classList.remove("search-active");
+    if (searchInput) searchInput.value = "";
+    if (searchResults) searchResults.innerHTML = "";
+  }
+
+  searchOpen?.addEventListener("click", openSearch);
+  searchClose?.addEventListener("click", closeSearch);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeSearch();
+  });
+
+  searchInput?.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    if (!searchResults) return;
+
+    if (!query) {
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    const matches = posts.filter(
+      (p) =>
+        p.title.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query)
+    );
+
+    searchResults.innerHTML = matches.length
+      ? matches
+          .map(
+            (p) =>
+              `<div class="search-result-item"><a href="/blog/${p.slug}">${p.title}</a><p>${p.description}</p></div>`
+          )
+          .join("")
+      : `<p style="color: #a3a3a3; font-style: italic; margin-top: 20px;">No results found.</p>`;
+  });
+</script>
