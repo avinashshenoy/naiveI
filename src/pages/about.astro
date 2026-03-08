@@ -1,47 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroBanner from "../components/HeroBanner.astro";
+import { getEntry } from "astro:content";
+
+const about = await getEntry("about", "index");
+const { Content } = await about!.render();
 ---
 
 <BaseLayout
-  title="About"
-  description="Learn more about Avinash Shenoy, creator of Naive Investor."
+  title={about!.data.title}
+  description={about!.data.description}
 >
   <HeroBanner
     slot="hero"
-    title="About Me"
+    title={about!.data.title}
     type="page"
   />
 
   <div class="container">
     <div class="row">
       <div class="col-content post-container">
-        <p>
-          Welcome! My name is <strong>Avinash</strong>, creator of Naive Investor.
-          I consider myself an amateur and still naive trader who has been actively
-          dipping his toes in the public markets.
-        </p>
-
-        <h2>What I Do</h2>
-        <p>
-          I work with modern web technologies to build fast, accessible, and
-          delightful user experiences. My interests span front-end development,
-          static site generators, financial markets, and developer tooling.
-        </p>
-
-        <h2>Skills</h2>
-        <ul>
-          <li>JavaScript / TypeScript</li>
-          <li>HTML &amp; CSS</li>
-          <li>Astro, React, and other frameworks</li>
-          <li>Git &amp; CI/CD</li>
-        </ul>
-
-        <h2>Get in Touch</h2>
-        <p>
-          You can find me on <a href="https://github.com/ashenoy2014" target="_blank" rel="noopener noreferrer">GitHub</a>
-          and <a href="https://twitter.com/nic_nash" target="_blank" rel="noopener noreferrer">Twitter</a>.
-        </p>
+        <Content />
       </div>
     </div>
   </div>
