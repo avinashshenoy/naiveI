@@ -1,12 +1,13 @@
 ---
 title: "Insurance is cheap right now but is that the right play for individual investors?"
 description: "Single stock volatility is very high and yet index level volatility is historically low given all things in play. But what should individual investors do with this knowledge"
-pubDate: 2026-07-07
+pubDate: 2026-07-16
 tags:
-  - markets
-  - investing
+  - Markets
+  - Investing
   - Volatility
   - Portfolio protection
+  - Position Sizing
 ---
 
 A common theme I currently hear from portfolio managers that publish their opinion via news or posts seems to be centered around the concept of Index volatility and index insurance. More specifically that Index volatility is at a significant low point right now and getting index protection costs very little and that it would be wise for investors to buy portfolio protection. What does this all mean? Let me try to take a quick stab at what it means and share a couple of my thoughts around this topic that I expressed to others in my friend circle.
